@@ -1,8 +1,3 @@
---[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
--- Radon | Bloxstrike [FIXED ESP & FOV BUG + ADVANCED SKIN & GLOVE CHANGER + WORLD SECTION + BULLET TRACERS & IMPACTS + ESP TEAM CHECK + FOV COLOR PICKERS + CUSTOM FOV + NO FALL DAMAGE + CONTINUOUS AUTO BHOP]
-local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
@@ -68,7 +63,7 @@ MiscBox:AddToggle("NoFallDamage", {
     Default = false,
 })
 
--- Непрерывный авто-бхоп по зажатию пробела (как в исходниках на 5к строк)
+-- Непрерывный авто-бхоп по зажатию пробела
 RunService.RenderStepped:Connect(function()
     pcall(function()
         if Toggles.AutoBhop and Toggles.AutoBhop.Value then
@@ -2589,7 +2584,7 @@ local function createBulletImpact(hitPos)
     if not Toggles.BulletImpacts.Value then return end
     
     local impactPart = Instance.new("Part")
-    impactPart.Size = Vector3.new(0.6, 0.6, 0.6) -- увеличенный размер и кубическая форма
+    impactPart.Size = Vector3.new(0.6, 0.6, 0.6)
     impactPart.Shape = Enum.PartType.Block
     impactPart.Position = hitPos
     impactPart.Anchored = true
@@ -2735,6 +2730,22 @@ task.spawn(function()
         end)
     end
 end)
+
+-- =========================================================================
+-- [ SETTINGS: MENU KEYBIND (КНОПКА ОТКРЫТИЯ/ЗАКРЫТИЯ GUI) ]
+-- =========================================================================
+local SettingsGroup = Tabs.Settings:AddLeftGroupbox("Interface Settings", "settings")
+
+SettingsGroup:AddLabel("Menu Keybind"):AddKeyPicker("MenuKeybind", {
+    Text = "Menu Keybind",
+    Default = "RightShift",
+    Mode = "Toggle",
+    Callback = function(value)
+        Library.ToggleKeybind = Options.MenuKeybind
+    end
+})
+
+Library.ToggleKeybind = Options.MenuKeybind
 
 ThemeManager:SetLibrary(Library)
 SaveManager:SetLibrary(Library)
